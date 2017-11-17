@@ -51,7 +51,7 @@ public class PlanAJourney implements Performable {
         private String destination;
         private String departure;
 
-        public PlanAJourneyBuilder(String departure) {
+        PlanAJourneyBuilder(String departure) {
             this.departure = departure;
         }
 

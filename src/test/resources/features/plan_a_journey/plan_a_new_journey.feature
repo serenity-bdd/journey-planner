@@ -1,5 +1,9 @@
 Feature: Plan a new journey
 
+  In order to get to waste less time in public transport
+  As a London commuter
+  I want to know the quickest way to get between any two tube stations
+
   Scenario: Plan a new journey
     Given that Connie is a London commuter
     When she plans a journey from Waterloo to Canary Wharf departing at 09:00
@@ -16,9 +20,9 @@ Feature: Plan a new journey
 
   Scenario: Coordinating journeys
     Given that Connie is a London commuter
-    And that Charles is a London commuter
+    And that Connor is a London commuter
     When Connie plans a journey from Waterloo to Canary Wharf departing at 09:00
-    And Charles plans a journey from London Bridge to Moorgate departing at 10:00
+    And Connor plans a journey from London Bridge to Moorgate departing at 10:00
     Then Connie should see a trip on the Jubilee line to Canary Wharf line departing at 08:59
-    And Charles should see a trip on the Northern line to Moorgate line departing at 09:59
+    And Connor should see a trip on the Northern line to Moorgate line departing at 09:59
 

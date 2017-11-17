@@ -4,16 +4,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
-import planner.screenplay.model.TripDetails;
-import planner.screenplay.questions.TheBestJourneyOption;
+import planner.screenplay.questions.TheFastest;
 import planner.screenplay.tasks.PlanAJourney;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
-import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static org.hamcrest.Matchers.is;
 
 public class PlanAJourneyStepDefinitions {
@@ -39,15 +36,15 @@ public class PlanAJourneyStepDefinitions {
     public void should_see_departure_time(String name,
                                           String expectedDepartureTime) throws Throwable {
         theActorCalled(name).should(
-                seeThat("the departure time", TheBestJourneyOption.departureTime(), is(expectedDepartureTime))
+                seeThat("the departure time", TheFastest.departureTime(), is(expectedDepartureTime))
         );
     }
 
     @Then("^(.*) should see a trip on the (.*) line departing at (.*)")
     public void should_see_trip(String name, String line, String departureTime) {
         theActorCalled(name).should(
-                seeThat("the proposed itinerary", TheBestJourneyOption.tubeLine(), is(line)),
-                seeThat("the departure time", TheBestJourneyOption.departureTime(), is(departureTime))
+                seeThat("the proposed itinerary", TheFastest.tubeLine(), is(line)),
+                seeThat("the departure time", TheFastest.departureTime(), is(departureTime))
         );
     }
 

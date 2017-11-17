@@ -5,13 +5,11 @@ import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.targets.Target;
 import planner.screenplay.ui.JourneyResults;
-
-public class TheBestJourneyOption {
+public class TheFastest {
 
     public static Question<String> tubeLine() {
         return actor -> Text.of(JourneyResults.ITINERARY).viewedBy(actor).asString();
     }
-
 
     public static Question<String> departureTime() {
         return actor -> {
@@ -28,7 +26,7 @@ public class TheBestJourneyOption {
     }
 
     private static String[] journeyOptionElements(Actor actor, Target journeyOption) {
-        return Text.of(JourneyResults.BEST_JOURNEY_OPTION)
+        return Text.of(journeyOption)
                     .viewedBy(actor)
                     .asString()
                     .split("\n");
@@ -37,5 +35,4 @@ public class TheBestJourneyOption {
     private static String stripExtraCharsFrom(String value) {
         return value.replace("-", "").trim();
     }
-
 }

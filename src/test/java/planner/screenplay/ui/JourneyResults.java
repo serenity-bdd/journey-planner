@@ -10,7 +10,4 @@ public class JourneyResults {
                                                            .locatedBy(".journey-option:first-child");
     public static final Target ITINERARY = Target.the("Itinerary").locatedBy(".stop-location-description");;
 
-    public static final Target HEADER = Target.the("Results heaer").locatedBy(".jp-results-headline");
-
-
 }

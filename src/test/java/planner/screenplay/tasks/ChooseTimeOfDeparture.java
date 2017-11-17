@@ -5,8 +5,6 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
-import net.serenitybdd.screenplay.actions.selectactions.SelectByVisibleTextFromBy;
-import net.serenitybdd.screenplay.questions.SelectedValue;
 import net.thucydides.core.annotations.Step;
 import planner.screenplay.ui.JourneyPlanner;
 
