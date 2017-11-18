@@ -2,12 +2,16 @@ package planner.screenplay.interactions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
+import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Hit;
 import net.serenitybdd.screenplay.targets.Target;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.Keys;
+import planner.screenplay.ui.JourneyPlanner;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class PickFirstSuggestion implements Interaction {
 
@@ -25,6 +29,7 @@ public class PickFirstSuggestion implements Interaction {
                 Hit.the(Keys.ARROW_DOWN).into(inputField),
                 Hit.the(Keys.ENTER).into(inputField)
         );
+        BrowseTheWeb.as(actor).waitFor(500).milliseconds();
     }
 
     public static PickFirstSuggestion from(Target inputField) {

@@ -1,55 +1,28 @@
 package planner.screenplay.tasks;
 
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Performable;
+import net.serenitybdd.screenplay.Task;
+import java.time.DayOfWeek;
 
-import static net.serenitybdd.screenplay.Tasks.instrumented;
+/**
+ * The PlanAJourney task combines a number of more granular tasks into a single larger one.
+ */
+public class PlanAJourney {
 
-public class PlanAJourney implements Performable {
-
-    private final String departure;
-    private final String destination;
-    private final String departureTime;
-
-    public PlanAJourney(String departure, String destination, String departureTime) {
-        this.departure = departure;
-        this.destination = destination;
-        this.departureTime = departureTime;
+    public static ToDestination from(String origin) {
+        return new PlanAJourneyBuilder(origin);
     }
 
+    public interface ToDestination {  DepartingAt to(String destination); }
 
-    @Override
-    public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                OpenApplication.onTheJourneyPlannerPage(),
-                ChooseOrigin.of(departure),
-                ChooseDestination.of(destination),
-                ChooseTimeOfDeparture.of(departureTime),
-                Confirm.journeyDetails()
-        );
-    }
+    public interface DepartingAt {  DepartingNext departingAt(String departureTime); }
 
+    public interface DepartingNext {  Task next(DayOfWeek departureDay); }
 
-    //
-    // Builder methods
-    //
-
-    public static ToDestination from(String waterloo) {
-        return new PlanAJourneyBuilder(waterloo);
-    }
-
-    public interface ToDestination {
-        DepartingAt to(String canary_wharf);
-    }
-    
-    public interface DepartingAt {
-        Performable departingAt(String departureTime);
-    }
-
-    public static class PlanAJourneyBuilder implements ToDestination, DepartingAt {
+    public static class PlanAJourneyBuilder implements ToDestination, DepartingAt, DepartingNext {
 
         private String destination;
         private String departure;
+        private String departureTime;
 
         PlanAJourneyBuilder(String departure) {
             this.departure = departure;
@@ -62,8 +35,23 @@ public class PlanAJourney implements Performable {
         }
 
         @Override
-        public Performable departingAt(String departureTime) {
-            return instrumented(PlanAJourney.class, departure, destination, departureTime);
+        public DepartingNext departingAt(String departureTime) {
+            this.departureTime = departureTime;
+            return this;
+        }
+
+        @Override
+        public Task next(DayOfWeek departureDay) {
+            return Task.where("{0} plans a journey between #departure and #destination, leaving around #departureTime next #departureDay",
+                    OpenApplication.onTheJourneyPlannerPage(),
+                    ChooseOrigin.of(departure),
+                    ChooseDestination.of(destination),
+                    ChooseTimeOfDeparture.of(departureTime).next(departureDay),
+                    Confirm.journeyDetails())
+                    .with("departure").of(departure)
+                    .with("destination").of(destination)
+                    .with("departureTime").of(departureTime)
+                    .with("departureDay").of(departureDay);
         }
     }
 }

@@ -4,13 +4,15 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
@@ -35,6 +37,9 @@ public class JourneyPlannerPage extends PageObject {
 
     @FindBy(css = "label[for=departing]")
     private WebElementFacade leavingButton;
+
+    @FindBy(id = "Date")
+    private WebElement dateSelector;
 
     @FindBy(id = "Time")
     private WebElement timeSelector;
@@ -64,17 +69,20 @@ public class JourneyPlannerPage extends PageObject {
         destination.sendKeys(Keys.ENTER);
     }
 
-    public void chooseTimeOfDeparture(String timeOfDeparture) {
+    public void chooseDayAndTimeOfDeparture(DayOfWeek day, String timeOfDeparture) {
         changeTimeLink.click();
         leavingButton.click();
 
         selectFromDropdown(timeSelector, timeOfDeparture);
+
+        LocalDate today = LocalDate.now();
+        LocalDate plannedDay = today.with(TemporalAdjusters.nextOrSame(day));
+        new Select(dateSelector).selectByValue((plannedDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
     }
 
-
     public void confirmSelection() {
-
-        planMyJourneyButton.click();
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+        jse.executeScript("arguments[0].click();", planMyJourneyButton);
 
         waitFor(visibilityOf(journeyResults));
     }

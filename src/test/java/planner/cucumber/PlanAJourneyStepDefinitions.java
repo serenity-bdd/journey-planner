@@ -9,6 +9,8 @@ import net.serenitybdd.screenplay.actors.OnlineCast;
 import planner.screenplay.questions.TheFastest;
 import planner.screenplay.tasks.PlanAJourney;
 
+import java.time.DayOfWeek;
+
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static org.hamcrest.Matchers.is;
@@ -24,15 +26,19 @@ public class PlanAJourneyStepDefinitions {
         theActorCalled(commuterName);
     }
 
-    @When("^(.*) plans a journey from (.*) to (.*) departing at (.*)$")
-    public void plan_a_journeys(String name, String departure, String destination, String departureTime) throws Throwable {
+    @When("^(.*) plans a journey from (.*) to (.*) departing at (\\d\\d:\\d\\d) next (.*)$")
+    public void plan_a_journeys(String name,
+                                String departure,
+                                String destination,
+                                String departureTime,
+                                DayOfWeek departureDay) throws Throwable {
         theActorCalled(name).attemptsTo(
-                PlanAJourney.from(departure).to(destination).departingAt(departureTime)
+                PlanAJourney.from(departure).to(destination).departingAt(departureTime).next(departureDay)
 
         );
     }
 
-    @Then("^(.*) should see that the fastest train departs at (.*)$")
+    @Then("^(.*) should see that the fastest train departs at (\\d\\d:\\d\\d)$")
     public void should_see_departure_time(String name,
                                           String expectedDepartureTime) throws Throwable {
         theActorCalled(name).should(
@@ -40,7 +46,7 @@ public class PlanAJourneyStepDefinitions {
         );
     }
 
-    @Then("^(.*) should see a trip on the (.*) line departing at (.*)")
+    @Then("^(.*) should see a trip on the (.*) line departing at (\\d\\d:\\d\\d)")
     public void should_see_trip(String name, String line, String departureTime) {
         theActorCalled(name).should(
                 seeThat("the proposed itinerary", TheFastest.tubeLine(), is(line)),

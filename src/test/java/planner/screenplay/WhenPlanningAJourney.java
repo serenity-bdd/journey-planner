@@ -4,12 +4,16 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.annotations.WithTagValuesOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import planner.screenplay.questions.TheFastest;
 import planner.screenplay.tasks.*;
 
+import java.time.DayOfWeek;
+
+import static java.time.DayOfWeek.MONDAY;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.Matchers.*;
 
@@ -19,34 +23,13 @@ public class WhenPlanningAJourney {
     @Managed WebDriver browser;
 
     @Test
-    public void should_show_the_soonest_departure_time_close_to_the_requested_time() {
-
-        Actor connie = Actor.named("Connie");
-        connie.can(BrowseTheWeb.with(browser));
-
-        connie.attemptsTo(
-                OpenApplication.onTheJourneyPlannerPage(),
-                ChooseOrigin.of("Waterloo"),
-                ChooseDestination.of("Canary Wharf"),
-                ChooseTimeOfDeparture.of("09:00"),
-                Confirm.journeyDetails()
-        );
-
-        connie.should(
-                seeThat("the fastest tube line", TheFastest.tubeLine(), is("Jubilee line to Canary Wharf")),
-                seeThat("the departure time", TheFastest.departureTime(), is("08:59")),
-                seeThat("the arrival time", TheFastest.arrivalTime(), is("09:09"))
-        );
-    }
-
-
-    @Test
+    @WithTagValuesOf({"screenplay"})
     public void should_show_the_best_journey_option() {
         Actor connie = Actor.named("Connie");
         connie.can(BrowseTheWeb.with(browser));
 
         connie.attemptsTo(
-                PlanAJourney.from("Waterloo").to("Canary Wharf").departingAt("09:00")
+                PlanAJourney.from("Waterloo").to("Canary Wharf").departingAt("09:00").next(MONDAY)
         );
 
         connie.should(

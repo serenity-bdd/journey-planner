@@ -1,40 +1,51 @@
 package planner.screenplay.tasks;
 
-import net.serenitybdd.core.steps.Instrumented;
-import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
-import net.thucydides.core.annotations.Step;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+import planner.screenplay.interactions.JavaScriptClick;
+import planner.screenplay.interactions.SelectDepartureDate;
 import planner.screenplay.ui.JourneyPlanner;
 
-public class ChooseTimeOfDeparture implements Task {
+import java.time.DayOfWeek;
 
-    private final String timeOfDeparture;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-    public ChooseTimeOfDeparture(String timeOfDeparture) {
-        this.timeOfDeparture = timeOfDeparture;
-    }
+public class ChooseTimeOfDeparture {
 
     /**
-     * Usage: ChooseTimeOfDeparture.of("09:00")
+     * Usage: ChooseTimeOfDeparture.of("09:00").next(MONDAY)
      */
-    public static ChooseTimeOfDeparture of(String timeOfDeparture) {
-        return Instrumented.instanceOf(ChooseTimeOfDeparture.class).withProperties(timeOfDeparture);
+    public static TimeOfDepartureBuilder of(String timeOfDeparture) {
+        return new TimeOfDepartureBuilder(timeOfDeparture);
     }
 
-    @Step("{0} selects time of departure of of #timeOfDeparture")
-    @Override
-    public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                Click.on(JourneyPlanner.CHANGE_TIME),
-                Click.on(JourneyPlanner.LEAVING_BUTTON)
-        );
-        actor.attemptsTo(
-                Click.on(JourneyPlanner.SELECTED_DEPARTURE_DROPDOWN),
-                SelectFromOptions.byVisibleText(timeOfDeparture).from(JourneyPlanner.SELECTED_DEPARTURE_TIME)
-        );
-    }
+    public static class TimeOfDepartureBuilder {
 
+        private final String timeOfDeparture;
+
+        TimeOfDepartureBuilder(String timeOfDeparture) {
+            this.timeOfDeparture = timeOfDeparture;
+        }
+
+        public Task next(DayOfWeek dayOfDeparture) {
+            return Task.where("{0} selects time of departure of #timeOfDeparture next #dayOfDeparture",
+
+                    WaitUntil.the(JourneyPlanner.CHANGE_TIME, isVisible()),
+                    Click.on(JourneyPlanner.CHANGE_TIME),
+
+                    WaitUntil.the(JourneyPlanner.LEAVING_BUTTON, isVisible()),
+                    Click.on(JourneyPlanner.LEAVING_BUTTON),
+
+                    SelectDepartureDate.in(JourneyPlanner.SELECTED_DEPARTURE_DATE).toNext(dayOfDeparture),
+
+                    SelectFromOptions.byVisibleText(timeOfDeparture).from(JourneyPlanner.SELECTED_DEPARTURE_TIME)
+
+
+            ).with("timeOfDeparture").of(timeOfDeparture)
+             .with("dayOfDeparture").of(dayOfDeparture);
+        }
+    }
 
 }

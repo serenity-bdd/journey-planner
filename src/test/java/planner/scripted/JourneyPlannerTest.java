@@ -3,14 +3,14 @@ package planner.scripted;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.Keys.*;
@@ -18,7 +18,9 @@ import static org.openqa.selenium.Keys.ARROW_DOWN;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 /**
- * Journey JourneyPlanner - scripting the flow
+ * Some WebDriver tests look like this one.
+ * Tests like this are hard to follow and very hard to maintain. And they hide the business intent in a lot of noisy code.
+ *
  */
 public class JourneyPlannerTest {
 
@@ -46,12 +48,13 @@ public class JourneyPlannerTest {
     }
 
     @Test
-    public void planning_a_journey() {
+    public void planning_a_journey_using_a_test_script() {
 
         browser.get("https://tfl.gov.uk/");
         browser.findElement(origin).sendKeys("Waterloo");
 
         WebDriverWait wait = new WebDriverWait(browser, 10);
+
         wait.until(visibilityOfElementLocated(originSuggestions));
 
         browser.findElement(originSuggestions).sendKeys(ARROW_DOWN);
@@ -60,6 +63,7 @@ public class JourneyPlannerTest {
         browser.findElement(destination).sendKeys("Canary Wharf");
 
         wait.until(visibilityOfElementLocated(destinationSuggestions));
+
         browser.findElement(destinationSuggestions).sendKeys(ARROW_DOWN);
         browser.findElement(destinationSuggestions).sendKeys(ENTER);
 
@@ -68,9 +72,12 @@ public class JourneyPlannerTest {
 
         new Select(browser.findElement(timeSelector)).selectByVisibleText("09:00");
 
-        browser.findElement(planMyJourneyButton).click();
+        JavascriptExecutor js = (JavascriptExecutor) browser;
+        WebElement planMyJourney = browser.findElement(planMyJourneyButton);
 
-        wait.until(visibilityOfElementLocated(journeyResults));
+        js.executeScript("arguments[0].click();", planMyJourney);
+
+        wait.withTimeout(30, TimeUnit.SECONDS).until(visibilityOfElementLocated(journeyResults));
 
         String fastestDepartureTime = startTimeOf(browser.findElement(fastestJourney).getText());
 

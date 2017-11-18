@@ -2,9 +2,9 @@ package planner.screenplay.tasks;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
+import planner.screenplay.interactions.JavaScriptClick;
 import planner.screenplay.ui.JourneyPlanner;
 import planner.screenplay.ui.JourneyResults;
 
@@ -24,9 +24,9 @@ public class Confirm implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Click.on(JourneyPlanner.PLAN_MY_JOURNEY),
+                JavaScriptClick.on(JourneyPlanner.PLAN_MY_JOURNEY),
                 WaitUntil.the(JourneyResults.RESULTS_LIST, isVisible())
-                         .forNoMoreThan(30).seconds()
+                         .forNoMoreThan(60).seconds()
         );
     }
 
