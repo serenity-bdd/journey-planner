@@ -4,9 +4,9 @@ import net.serenitybdd.screenplay.Task;
 import java.time.DayOfWeek;
 
 /**
- * The PlanAJourney task combines a number of more granular tasks into a single larger one.
+ * The PlanATrip task combines a number of more granular tasks into a single larger one.
  */
-public class PlanAJourney {
+public class PlanATrip {
 
     public static ToDestination from(String origin) {
         return new PlanAJourneyBuilder(origin);
@@ -44,8 +44,8 @@ public class PlanAJourney {
         public Task next(DayOfWeek departureDay) {
             return Task.where("{0} plans a journey between #departure and #destination, leaving around #departureTime next #departureDay",
                     OpenApplication.onTheJourneyPlannerPage(),
-                    ChooseOrigin.of(departure),
-                    ChooseDestination.of(destination),
+                    ChooseFromStation.of(departure),
+                    ChooseToStation.of(destination),
                     ChooseTimeOfDeparture.of(departureTime).next(departureDay),
                     Confirm.journeyDetails())
                     .with("departure").of(departure)

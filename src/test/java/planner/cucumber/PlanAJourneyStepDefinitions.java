@@ -6,8 +6,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
-import planner.screenplay.questions.TheFastest;
-import planner.screenplay.tasks.PlanAJourney;
+import planner.screenplay.questions.TheFirstTrain;
+import planner.screenplay.tasks.PlanATrip;
 
 import java.time.DayOfWeek;
 
@@ -21,7 +21,7 @@ public class PlanAJourneyStepDefinitions {
         OnStage.setTheStage(new OnlineCast());
     }
 
-    @Given("^that (.*) is a London commuter$")
+    @Given("^that (.*) is a Sydney commuter$")
     public void a_london_commuter_named(String commuterName) throws Throwable {
         theActorCalled(commuterName);
     }
@@ -33,26 +33,19 @@ public class PlanAJourneyStepDefinitions {
                                 String departureTime,
                                 DayOfWeek departureDay) throws Throwable {
         theActorCalled(name).attemptsTo(
-                PlanAJourney.from(departure).to(destination).departingAt(departureTime).next(departureDay)
+                PlanATrip.from(departure).to(destination).departingAt(departureTime).next(departureDay)
 
         );
     }
 
-    @Then("^(.*) should see that the fastest train departs at (\\d\\d:\\d\\d)$")
+    @Then("^(.*) should see that the first train departs at (\\d\\d:\\d\\d) and arrives at (\\d\\d:\\d\\d)$")
     public void should_see_departure_time(String name,
-                                          String expectedDepartureTime) throws Throwable {
+                                          String expectedDepartureTime,
+                                          String expectedArrivaltTime) throws Throwable {
         theActorCalled(name).should(
-                seeThat("the departure time", TheFastest.departureTime(), is(expectedDepartureTime))
+                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is(expectedDepartureTime)),
+                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is(expectedArrivaltTime))
         );
     }
-
-    @Then("^(.*) should see a trip on the (.*) line departing at (\\d\\d:\\d\\d)")
-    public void should_see_trip(String name, String line, String departureTime) {
-        theActorCalled(name).should(
-                seeThat("the proposed itinerary", TheFastest.tubeLine(), is(line)),
-                seeThat("the departure time", TheFastest.departureTime(), is(departureTime))
-        );
-    }
-
 
 }

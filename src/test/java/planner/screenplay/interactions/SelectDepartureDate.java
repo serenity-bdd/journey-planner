@@ -4,12 +4,14 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
 import net.serenitybdd.screenplay.targets.Target;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class SelectDepartureDate {
+
     public static SelectDepartureDateBuilder in(Target departureDate) {
         return new SelectDepartureDateBuilder(departureDate);
     }
@@ -22,16 +24,27 @@ public class SelectDepartureDate {
         }
 
         public Interaction toNext(DayOfWeek dayOfDeparture) {
-            LocalDate today = LocalDate.now();
-            LocalDate plannedDay = today.with(TemporalAdjusters.nextOrSame(dayOfDeparture));
-            String plannedDate = plannedDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+            String plannedDate = formattedPlannedDay(dayOfDeparture);
 
             SelectFromOptions.byValue(plannedDate).from(departureDate);
-
             return Interaction.where(
                     "Select departure date of next " + dayOfDeparture,
-                    SelectFromOptions.byValue(plannedDate).from(departureDate)
+                    SelectFromOptions.byVisibleText(plannedDate).from(departureDate)
             );
+        }
+
+        private String formattedPlannedDay(DayOfWeek dayOfDeparture) {
+            LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+            LocalDateTime plannedDay = today.with(TemporalAdjusters.nextOrSame(dayOfDeparture));
+
+            if (DAYS.between(today, plannedDay) == 0) {
+                return "Today (" + plannedDay.format(DateTimeFormatter.ofPattern("EEE")) + ")";
+            } else if (DAYS.between(today, plannedDay) == 1) {
+                return "Tomorrow (" + plannedDay.format(DateTimeFormatter.ofPattern("EEE")) + ")";
+            } else {
+                return plannedDay.format(DateTimeFormatter.ofPattern("dd MMM (EEE)"));
+            }
         }
     }
 }

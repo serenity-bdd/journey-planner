@@ -2,9 +2,9 @@ package planner.screenplay.tasks;
 
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.SelectFromOptions;
 import planner.screenplay.interactions.SelectDepartureDate;
-import planner.screenplay.ui.JourneyPlanner;
+import planner.screenplay.interactions.SelectDepartureTime;
+import planner.screenplay.ui.TripPlanner;
 
 import java.time.DayOfWeek;
 
@@ -28,17 +28,15 @@ public class ChooseTimeOfDeparture {
         public Task next(DayOfWeek dayOfDeparture) {
             return Task.where("{0} selects time of departure of #timeOfDeparture next #dayOfDeparture",
 
-                    Click.on(JourneyPlanner.CHANGE_TIME),
-                    Click.on(JourneyPlanner.LEAVING_BUTTON),
+                    Click.on(TripPlanner.CHANGE_TIME),
+                    Click.on(TripPlanner.LEAVING_BUTTON),
 
-                    SelectDepartureDate.in(JourneyPlanner.SELECTED_DEPARTURE_DATE).toNext(dayOfDeparture),
-
-                    SelectFromOptions.byVisibleText(timeOfDeparture).from(JourneyPlanner.SELECTED_DEPARTURE_TIME)
+                    SelectDepartureDate.in(TripPlanner.SELECTED_DEPARTURE_DATE).toNext(dayOfDeparture),
+                    SelectDepartureTime.to(timeOfDeparture)
 
 
             ).with("timeOfDeparture").of(timeOfDeparture)
              .with("dayOfDeparture").of(dayOfDeparture);
         }
     }
-
 }
