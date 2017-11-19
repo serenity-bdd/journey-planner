@@ -8,6 +8,7 @@ import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
 import planner.screenplay.interactions.PickFirstSuggestion;
+import planner.screenplay.interactions.TypeKeysInto;
 import planner.screenplay.ui.JourneyPlanner;
 
 
