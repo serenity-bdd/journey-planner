@@ -1,4 +1,4 @@
-Feature: Plan a new journey
+Feature: Plan an exciting journey
 
   In order to get to waste less time in public transport
   As a Sydney commuter

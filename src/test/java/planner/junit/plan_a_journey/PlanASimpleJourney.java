@@ -1,4 +1,4 @@
-package planner.junit.commuting;
+package planner.junit.plan_a_journey;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -17,7 +17,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.Matchers.*;
 
 @RunWith(SerenityRunner.class)
-public class WhenPlanningAJourney {
+public class PlanASimpleJourney {
 
     @Managed WebDriver browser;
 
