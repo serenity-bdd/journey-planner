@@ -1,4 +1,4 @@
-package planner.screenplay;
+package planner.junit.commuting;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -28,7 +28,7 @@ public class WhenPlanningAJourney {
         sarah.can(BrowseTheWeb.with(browser));
     }
 
-    @Test
+  @Test
     @WithTagValuesOf({"screenplay"})
     public void should_show_the_best_journey_option() {
 

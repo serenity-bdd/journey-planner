@@ -1,4 +1,4 @@
-package planner;
+package planner.cucumber;
 
 import cucumber.api.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
