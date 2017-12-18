@@ -11,9 +11,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <serenity.version>1.8.0</serenity.version>
-        <serenity.maven.version>1.8.0</serenity.maven.version>
-        <serenity.cucumber.version>1.6.5</serenity.cucumber.version>
+        <serenity.version>1.8.11-SNAPSHOT</serenity.version>
+        <serenity.maven.version>1.8.10</serenity.maven.version>
+        <serenity.cucumber.version>1.6.6</serenity.cucumber.version>
         <encoding>UTF-8</encoding>
         <tags></tags>
         <webdriver.base.url></webdriver.base.url>
@@ -87,6 +87,11 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd.maven.plugins</groupId>
+            <artifactId>serenity-maven-plugin</artifactId>
+            <version>${serenity.maven.version}</version>
         </dependency>
     </dependencies>
     <build>

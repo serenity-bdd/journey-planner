@@ -1,16 +1,30 @@
-Feature: Plan an exciting journey
+Feature: Plan a simple journey
 
   In order to get to waste less time in public transport
   As a Sydney commuter
   I want to know the quickest way to get between any two stations
 
-  @exciting
-  Scenario: Plan a new journey
-    Given that Sarah is a Sydney commuter
-    When she plans a journey from Chatswood to Wynyard departing at 09:00 next MONDAY
-    Then she should see that the first train departs at 09:04 and arrives at 09:22
+  ![Flowchart](images/flowchart.png)
 
-  @exciting
+  @basic
+  Scenario: Plan a basic journey
+    Given that Sarah is a Sydney commuter
+    When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
+    Then she should see that the first train departs at 09:04 and arrives at 09:26
+
+  @basic
+  Scenario: Plan another basic journey
+    Given that Sarah is a Sydney commuter
+    When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
+    Then she should see that the first train departs at 09:04 and arrives at 09:26
+
+  @basic
+  Scenario: Plan yet another basic journey
+    Given that Sarah is a Sydney commuter
+    When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
+    Then she should see that the first train departs at 09:04 and arrives at 09:26
+
+
   Scenario Outline: Plan many a journey
     Given that Connie is a Sydney commuter
     When she plans a journey from <departure> to <destination> departing at <plannedDepartureTime> next <departureDay>

@@ -7,6 +7,10 @@ public class TripPlanner {
     public static final Target FROM = Target.the("From field")
             .locatedBy("#search-input-From");
 
+    public static final Target SEARCHING_MESSAGE = Target.the("'Searching...' message")
+            .locatedBy(".suggestion-message");
+
+
     public static final Target SUGGESTIONS = Target.the("Matching stations")
             .locatedBy(".list-group-item-title");
 

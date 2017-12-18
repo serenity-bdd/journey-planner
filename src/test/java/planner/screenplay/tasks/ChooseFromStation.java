@@ -7,6 +7,7 @@ import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Step;
 import planner.screenplay.interactions.PickFirstSuggestion;
+import planner.screenplay.interactions.WaitUntilTheSuggestedStations;
 import planner.screenplay.ui.TripPlanner;
 
 
@@ -23,7 +24,7 @@ public class ChooseFromStation implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Enter.theValue(station).into(TripPlanner.FROM),
-                WaitUntil.the(TripPlanner.SUGGESTIONS, isVisible()),
+                WaitUntilTheSuggestedStations.areVisible(),
                 PickFirstSuggestion.from(TripPlanner.FROM)
         );
     }

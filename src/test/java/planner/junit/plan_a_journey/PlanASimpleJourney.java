@@ -42,4 +42,21 @@ public class PlanASimpleJourney {
                 seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("22min"))
         );
     }
+
+
+    @Test
+    @WithTagValuesOf({"screenplay"})
+    public void should_show_trip_duration() {
+
+        sarah.attemptsTo(
+                PlanATrip.from("Chatswood").to("Town Hall").departingAt("09:00").next(MONDAY)
+        );
+
+        sarah.should(
+                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is("09:04")),
+                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is("09:26")),
+                seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("22min"))
+        );
+    }
+
 }
