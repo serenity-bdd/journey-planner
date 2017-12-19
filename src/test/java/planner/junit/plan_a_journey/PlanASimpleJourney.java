@@ -37,9 +37,9 @@ public class PlanASimpleJourney {
         );
 
         sarah.should(
-                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is("09:04")),
-                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is("09:26")),
-                seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("22min"))
+                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is("09:00")),
+                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is("09:21")),
+                seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("21min"))
         );
     }
 
@@ -53,9 +53,9 @@ public class PlanASimpleJourney {
         );
 
         sarah.should(
-                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is("09:04")),
-                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is("09:26")),
-                seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("22min"))
+                seeThat("the first train leaves at", TheFirstTrain.departureTime(), is("09:00")),
+                seeThat("the first train arrives at", TheFirstTrain.arrivalTime(), is("09:21")),
+                seeThat("the trip lasts", TheFirstTrain.tripDuration(), containsString("21min"))
         );
     }
 

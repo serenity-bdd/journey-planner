@@ -10,19 +10,19 @@ Feature: Plan a simple journey
   Scenario: Plan a basic journey
     Given that Sarah is a Sydney commuter
     When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
-    Then she should see that the first train departs at 09:04 and arrives at 09:26
+    Then she should see that the first train departs at 09:00 and arrives at 09:21
 
   @basic
   Scenario: Plan another basic journey
     Given that Sarah is a Sydney commuter
     When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
-    Then she should see that the first train departs at 09:04 and arrives at 09:26
+    Then she should see that the first train departs at 09:00 and arrives at 09:21
 
   @basic
   Scenario: Plan yet another basic journey
     Given that Sarah is a Sydney commuter
     When she plans a journey from Chatswood to Town Hall departing at 09:00 next MONDAY
-    Then she should see that the first train departs at 09:04 and arrives at 09:26
+    Then she should see that the first train departs at 09:00 and arrives at 09:21
 
 
   Scenario Outline: Plan many a journey
@@ -31,5 +31,5 @@ Feature: Plan a simple journey
     Then she should see that the first train departs at <departureTime> and arrives at <arrivalTime>
     Examples:
       | departure    | destination | plannedDepartureTime | departureDay | departureTime | arrivalTime |
-      | Chatswood    | Town Hall   | 09:00                | MONDAY       | 09:04         | 09:26       |
+      | Chatswood    | Town Hall   | 09:00                | MONDAY       | 09:00         | 09:21       |
       | Martin Place | Parramatta  | 09:00                | TUESDAY      | 08:57         | 09:36       |

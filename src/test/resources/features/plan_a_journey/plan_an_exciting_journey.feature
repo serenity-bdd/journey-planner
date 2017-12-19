@@ -8,7 +8,7 @@ Feature: Plan an exciting journey
   Scenario: Plan a new journey
     Given that Sarah is a Sydney commuter
     When she plans a journey from Chatswood to Wynyard departing at 09:00 next MONDAY
-    Then she should see that the first train departs at 09:04 and arrives at 09:22
+    Then she should see that the first train departs at 09:00 and arrives at 09:17
 
   @exciting
   Scenario Outline: Plan many a journey
@@ -17,5 +17,5 @@ Feature: Plan an exciting journey
     Then she should see that the first train departs at <departureTime> and arrives at <arrivalTime>
     Examples:
       | departure    | destination | plannedDepartureTime | departureDay | departureTime | arrivalTime |
-      | Chatswood    | Town Hall   | 09:00                | MONDAY       | 09:04         | 09:26       |
+      | Chatswood    | Town Hall   | 09:00                | MONDAY       | 09:00         | 09:21       |
       | Martin Place | Parramatta  | 09:00                | TUESDAY      | 08:57         | 09:36       |
