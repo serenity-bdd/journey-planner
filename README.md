@@ -1,18 +1,16 @@
 # Serenity Cucumber Starter project
 
-[![CircleCI](https://circleci.com/gh/serenity-bdd/serenity-cucumber-starter.svg?style=svg)](https://circleci.com/gh/serenity-bdd/serenity-cucumber-starter)
-
 This is a simple demo project illustrating Serenity BDD and Cucumber web testing.
 
 ## Get the code
 
 Git:
 
-    git clone https://github.com/serenity-bdd/serenity-cucumber-starter.git
-    cd serenity-cucumber-starter
+    git clone https://github.com/serenity-bdd/journey-planner.git
+    cd journey-planner
 
 
-Or simply [download a zip](https://github.com/serenity-bdd/serenity-cucumber-starter/archive/master.zip) file.
+Or simply [download a zip](https://github.com/serenity-bdd/journey-planner/archive/master.zip) file.
 
 ## Use Maven
 
